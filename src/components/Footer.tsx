@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-12 md:gap-8 w-full">
 
                 {/* Khối Thông tin chung */}
-                <div className="flex-[2] flex flex-col gap-6">
+                <div className="flex-2 flex flex-col gap-6">
                     <h3 className="text-[#77a8fa] font-bold text-3xl tracking-tight">
                         MINNA FESTIVAL
                     </h3>

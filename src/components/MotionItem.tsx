@@ -16,7 +16,8 @@ export const MotionItems: React.FC<prop> = ({
 }) => {
     return (
         <motion.div
-            className="flex flex-col-reverse md:flex-row items-center justify-center px-10 gap-20 py-10"
+            className={`flex flex-col-reverse md:flex items-center justify-center px-10 gap-10 md:gap-20 py-16 
+                        ${reverse ? "md:flex-row-reverse" : ""}`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

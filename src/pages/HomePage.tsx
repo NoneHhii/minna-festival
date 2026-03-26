@@ -6,13 +6,13 @@ import brand3 from "../assets/images/brand3.jpg";
 import min1 from "../assets/images/min1.jpg";
 import min2 from "../assets/images/min2.jpg";
 import min3 from "../assets/images/min3.jpg";
-import min4 from "../assets/images/min4.jpg";
+// import min4 from "../assets/images/min4.jpg";
 // import minnaPic from "../assets/images/minnaPic.jpg";
 import parcmall from "../assets/images/parcmall.png";
 import mascotParcmall from "../assets/images/mascotParcmall.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MotionItems } from "../components/motionItem";
+// import { MotionItems } from "../components/motionItem";
 //gallery
 import gallery1 from "../assets/images/gallery1.jpg";
 import gallery2 from "../assets/images/gallery2.jpg";
@@ -120,10 +120,27 @@ const faqData: FAQItem[] = [
 
 export const HomePage: React.FC = () => {
     const [show, setShow] = useState(true);
-    const [currentScroll, setCurrentScroll] = useState(window.scroll);
+    // const [currentScroll, setCurrentScroll] = useState(window.scroll);
     const [activeId, setActiveId] = useState<number | null>(null);
 
-    useState
+    useEffect(() => {
+        const handleScroll = () => {
+            // Nếu cuộn quá 300px thì hiện nút, ngược lại thì ẩn
+            if (window.scrollY > 300) {
+                setShow(true);
+            } else {
+                setShow(false);
+            }
+        };
+
+        // Đăng ký sự kiện scroll
+        window.addEventListener("scroll", handleScroll);
+
+        // Cleanup function để tránh rò rỉ bộ nhớ khi component bị unmount
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <div className="w-full min-h-screen flex justify-center">
@@ -403,9 +420,24 @@ export const HomePage: React.FC = () => {
                     </div>
                 </section>
             </div>
-            <button className={`fixed bottom-10 right-10 p-3 bg-blue-600 text-white rounded-full transition-opacity ${show ? 'opacity-100' : 'opacity-0'}`}
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                ↑
+            <button
+                className={`
+        fixed bottom-10 right-10 z-50 p-4 bg-blue-600 text-white rounded-full 
+        shadow-lg transition-all duration-300 ease-in-out
+        ${show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50 pointer-events-none'}
+        hover:bg-blue-700 hover:shadow-blue-500/50 active:scale-95
+    `}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24"
+                    viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="3"
+                    strokeLinecap="round" strokeLinejoin="round"
+                >
+                    <path d="m18 15-6-6-6 6" />
+                </svg>
             </button>
         </div >
     )
