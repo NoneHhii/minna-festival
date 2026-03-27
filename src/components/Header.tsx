@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
     ];
 
     return (
-        <header className="bg-black/90 backdrop-blur-md sticky top-0 z-[100] flex justify-between items-center p-4 px-6 md:px-10">
+        <header className="bg-black/90 backdrop-blur-md sticky top-0 z-100 flex justify-between items-center p-4 px-6 md:px-10">
             {/* Logo */}
             <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => scrollToSection('home')}>
                 MINNA FESTIVAL
