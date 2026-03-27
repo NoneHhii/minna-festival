@@ -13,10 +13,10 @@ export const Header: React.FC = () => {
     };
 
     return (
-        <header className="bg-black flex justify-between p-3">
-            <h3 className="text-[#77a8fa] font-bold">MINNA FESTIVAL</h3>
-            <div className="">
-                <ul className="list-none flex text-white gap-12 font-medium">
+        <header className="bg-black flex justify-center p-3">
+            <h3 className="text-[#77a8fa] font-bold w-[10%] md:w-[30]">MINNA FESTIVAL</h3>
+            <div className="flex-1 ">
+                <ul className="list-none flex items-center justify-center text-white gap-12 font-medium">
                     <li className="cursor-pointer hover:text-[#77a8fa] transition-colors"
                         onClick={() => scrollToSection('partner')}>Đối tác</li>
 
@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
                         onClick={() => scrollToSection('faq')}>FAQ</li>
                 </ul>
             </div>
-            <button>Hello</button>
+            {/* <button>Hello</button> */}
         </header>
     )
 }
