@@ -226,7 +226,7 @@ export const HomePage: React.FC = () => {
                             hover:scale-105
                         "
                     >
-                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[350px] md:max-w-[450px] object-contain" />
+                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[300px] md:max-w-[450px] object-contain" />
                     </div>
                 </motion.div>
 
