@@ -147,7 +147,7 @@ export const HomePage: React.FC = () => {
             <div className="w-full">
                 <div className="bg-[#16171d] h-screen justify-center flex flex-col gap-10 px-2" id="home">
                     <div className="text-center text-white flex flex-col gap-10">
-                        <h2 className="text-6xl font-bold">Welcome to minna festival</h2>
+                        <h2 className="text-6xl font-bold">Welcome to Minna festival</h2>
                         <p className="text-[18px]">Nơi để mọi người đặt câu hỏi, đăng nhận diện, tìm dàn, tìm partner, tìm ptg, tìm MUA, tìm từa lưa…</p>
                     </div>
                     <div className="justify-center flex text-sm font-bold gap-2 my-5">
@@ -226,7 +226,7 @@ export const HomePage: React.FC = () => {
                             hover:scale-105
                         "
                     >
-                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[400px] md:max-w-[450px] object-contain" />
+                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[350px] md:max-w-[450px] object-contain" />
                     </div>
                 </motion.div>
 
