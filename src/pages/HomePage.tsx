@@ -169,7 +169,7 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 {/* Partner */}
-                <div className="bg-white p-3 flex flex-col items-center">
+                <div className="bg-white p-3 flex flex-col items-center" id="partner">
                     <p className="font-bold text-2xl my-3">Our Partners</p>
                     <a href="https://parcmall.com.vn/" className="mt-3">
                         <img src={parcmall} alt="" className="md:w-30 md:h-15" />
@@ -183,7 +183,7 @@ export const HomePage: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    id="partner"
+
                 >
                     <div className="flex-1 max-w-lg flex flex-col gap-10">
                         <p className="text-2xl font-bold text-green-600">
@@ -347,11 +347,6 @@ export const HomePage: React.FC = () => {
                 <section className="bg-white py-15 px-4 md:px-10" id="gallery">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Gallery</h2>
-
-                        {/* - grid-cols-2: 2 cột trên mobile
-                            - md:grid-cols-5: 5 cột trên desktop
-                            - grid-flow-dense: Tự động lấp đầy các khoảng trống nhỏ bằng ảnh phù hợp
-                        */}
                         <div className="grid grid-cols-2 md:grid-cols-5 grid-flow-dense gap-4 auto-rows-[80px]">
                             {gallery.map((photo) => (
                                 <div
@@ -364,7 +359,6 @@ export const HomePage: React.FC = () => {
                                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
 
-                                    {/* Lớp phủ (Overlay) khi hover */}
                                     {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <span className="text-white font-medium border border-white px-4 py-2 rounded-full scale-90 group-hover:scale-100 transition-transform">
                                     View Moment

@@ -4,10 +4,6 @@ import parcmall from "../assets/images/parcmall.png";
 export const Footer: React.FC = () => {
     return (
         <footer className="bg-[#16171d] py-16 px-6 md:px-20 border-t border-white/5">
-            {/* - flex-col: Xếp dọc trên mobile
-                - md:flex-row: Xếp ngang trên desktop
-                - items-start: Căn lề trái cho các cột
-            */}
             <div className="flex flex-col md:flex-row gap-12 md:gap-8 w-full">
 
                 {/* Khối Thông tin chung */}
@@ -69,7 +65,6 @@ export const Footer: React.FC = () => {
                 </div>
             </div>
 
-            {/* Bản quyền ở dưới cùng */}
             <div className="mt-16 pt-8 border-t border-white/5 text-center">
                 <p className="text-[#7d8791] text-xs">
                     © 2026 Minna Festival. All rights reserved. Designed by Khoa.
