@@ -24,6 +24,9 @@ import gallery7 from "../assets/images/gallery7.jpg";
 import gallery8 from "../assets/images/gallery8.jpg";
 import gallery9 from "../assets/images/gallery9.jpg";
 import { ChevronDown } from "lucide-react";
+import { guests } from "../data/guest";
+import GuestSection from "../components/GuestSection";
+import ChibiMascot from "../components/ChibiMascot";
 
 const imgBrand: string[] = [
     brand1,
@@ -143,7 +146,8 @@ export const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-full min-h-screen flex justify-center">
+        <div className="w-full min-h-screen flex justify-center relative overflow-clip">
+            <ChibiMascot/>
             <div className="w-full">
                 <div className="bg-[#16171d] h-screen justify-center flex flex-col gap-10 px-2" id="home">
                     <div className="text-center text-white flex flex-col gap-10">
@@ -342,6 +346,30 @@ export const HomePage: React.FC = () => {
                         </div>
                     </motion.div>
                 </div>
+
+                <section className="py-20" id="guests">
+                    <div className="max-w-7xl mx-auto px-4">
+                        <motion.div
+                            className="text-center mb-20"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <h2 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6">
+                                🌟 Khách mời đặc biệt
+                            </h2>
+                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                                Gặp gỡ những cosplayer, nhiếp ảnh gia và makeup artist hàng đầu sẽ góp mặt tại Minna Festival
+                            </p>
+                        </motion.div>
+
+                        <div className="space-y-0">
+                            {guests.map((guest, index) => (
+                                <GuestSection key={guest.id} guest={guest} index={index} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
                 {/* Gallery */}
                 <section className="bg-white py-15 px-4 md:px-10" id="gallery">

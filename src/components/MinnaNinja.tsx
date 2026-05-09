@@ -12,87 +12,84 @@ export const MinnaNinja: React.FC = () => {
             parent: gameRef.current,
             width: window.innerWidth,
             height: window.innerHeight,
-            transparent: true, // Quan trọng: Để lấp đầy website mà không che nội dung
+            transparent: true,
             physics: {
                 default: 'arcade',
-                arcade: {
-                    gravity: {
-                        x: 0,   // Thêm x: 0 vào đây
-                        y: 400
-                    }
-                }
+                arcade: { gravity: { x: 0, y: 500 }, debug: false }
             },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
+            input: { activePointers: 3 },
+            scene: { preload, create }
         };
 
-        const game = new Phaser.Game(config);
-
         function preload(this: Phaser.Scene) {
-            // Load ảnh trái cây/logo (Thay link ảnh thực tế của bạn)
-            this.load.image('fruit', 'https://labs.phaser.io/assets/sprites/apple.png');
+            // Load nhiều loại trái cây khác nhau
+            this.load.image('apple', 'https://labs.phaser.io/assets/sprites/apple.png');
+            this.load.image('melon', 'https://labs.phaser.io/assets/sprites/melon.png');
+            this.load.image('orange', 'https://labs.phaser.io/assets/sprites/orange.png');
+            this.load.image('bomb', 'https://labs.phaser.io/assets/sprites/mine.png'); // Thêm bom cho kịch tính
             this.load.image('gift', 'https://labs.phaser.io/assets/sprites/treasure_chest.png');
             this.load.image('particle', 'https://labs.phaser.io/assets/particles/red.png');
         }
 
         function create(this: Phaser.Scene) {
             const fruits = this.physics.add.group();
+            const fruitTypes = ['apple', 'melon', 'orange']; // Danh sách trái cây thường
 
-            // Hàm tạo trái cây bay lên
-            const spawnFruit = () => {
-                const x = Phaser.Math.Between(100, window.innerWidth - 100);
-                const isGift = Phaser.Math.Between(1, 100) <= 10; // 10% tỉ lệ trúng quà
+            const slashFruit = (item: any) => {
+                if (item.isSliced) return;
+                item.isSliced = true;
 
-                const item = fruits.create(x, window.innerHeight, isGift ? 'gift' : 'fruit');
-                item.setCircle(25);
-                item.setCollideWorldBounds(false);
-
-                // Lực tung lên ngẫu nhiên
-                item.setVelocityX(Phaser.Math.Between(-100, 100));
-                item.setVelocityY(Phaser.Math.Between(-600, -800));
-
-                // Cho phép tương tác
-                item.setInteractive();
-                item.on('pointerover', () => {
-                    // Hiệu ứng hạt khi chém
-                    const emitter = this.add.particles(0, 0, 'particle', {
-                        speed: 100,
-                        scale: { start: 0.5, end: 0 },
-                        blendMode: 'ADD',
-                        lifespan: 500
-                    });
-                    emitter.explode(20, item.x, item.y);
-
-                    if (isGift) {
-                        console.log("TRÚNG THƯỞNG RỒI BẠN ƠI!");
-                        // Bạn có thể gọi hàm callback từ React ở đây để hiện Modal thưởng
-                    }
-
-                    item.destroy(); // Chém là mất
+                this.add.particles(item.x, item.y, 'particle', {
+                    speed: 200, scale: { start: 0.6, end: 0 }, lifespan: 400, duration: 100
                 });
+
+                if (item.texture.key === 'bomb') {
+                    console.log("BOOM! Bạn bị trừ điểm");
+                } else if (item.texture.key === 'gift') {
+                    console.log("TRÚNG QUÀ!");
+                }
+
+                item.destroy();
             };
 
-            // Tung trái cây mỗi 2 giây
-            this.time.addEvent({ delay: 2000, callback: spawnFruit, loop: true });
-        }
+            this.time.addEvent({
+                delay: 1500,
+                callback: () => {
+                    const numToSpawn = Phaser.Math.Between(2, 4);
+                    for (let i = 0; i < numToSpawn; i++) {
+                        const x = Phaser.Math.Between(100, window.innerWidth - 100);
 
-        function update(this: Phaser.Scene) {
-            // Tự động xóa các trái cây rơi khỏi màn hình để nhẹ máy
-            // @ts-ignore
-            this.children.list.forEach((child: any) => {
-                if (child.y > window.innerHeight + 100) {
-                    child.destroy();
+                        // Quyết định loại trái cây tung lên
+                        let type = Phaser.Utils.Array.GetRandom(fruitTypes);
+                        const rand = Phaser.Math.Between(1, 100);
+                        if (rand <= 10) type = 'gift'; // 10% ra quà
+                        if (rand > 90) type = 'bomb';  // 10% ra bom
+
+                        const item = fruits.create(x, window.innerHeight, type);
+                        item.setCircle(30);
+                        item.setVelocityX(Phaser.Math.Between(-150, 150));
+                        item.setVelocityY(Phaser.Math.Between(-750, -950));
+                        item.setInteractive();
+                        item.on('pointerover', () => slashFruit(item));
+                    }
+                },
+                loop: true
+            });
+
+            this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+                if (pointer.isDown) {
+                    const bodies = this.physics.overlapRect(pointer.x - 20, pointer.y - 20, 40, 40);
+                    bodies.forEach((body: any) => {
+                        if (body.gameObject && fruits.contains(body.gameObject)) {
+                            slashFruit(body.gameObject);
+                        }
+                    });
                 }
             });
         }
 
-        // Xử lý khi resize màn hình
-        const handleResize = () => {
-            game.scale.resize(window.innerWidth, window.innerHeight);
-        };
+        const game = new Phaser.Game(config);
+        const handleResize = () => game.scale.resize(window.innerWidth, window.innerHeight);
         window.addEventListener('resize', handleResize);
 
         return () => {
@@ -104,12 +101,15 @@ export const MinnaNinja: React.FC = () => {
     return (
         <div
             ref={gameRef}
-            className="fixed inset-0 z-[9999] pointer-events-none"
-            style={{ pointerEvents: 'none' }}
+            className="fixed inset-0 z-[1002] pointer-events-none"
         >
-            {/* Mẹo: 'pointer-events-none' ở div cha để click xuyên qua được web,
-               nhưng Phaser sẽ tự xử lý 'pointerover' cho các item.
-            */}
+            <style>{`
+                /* CHỖ NÀY QUAN TRỌNG: Chỉ cho phép click/vuốt TRÊN trái cây, 
+                   còn lại cho phép cuộn trang xuyên qua canvas */
+                canvas { 
+                    pointer-events: none !important; 
+                }
+            `}</style>
         </div>
     );
 };
