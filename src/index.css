@@ -1,4 +1,18 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+    /* Cho Chrome, Safari và Opera */
+  }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    /* Cho IE và Edge */
+    scrollbar-width: none;
+    /* Cho Firefox */
+  }
+}
 
 /* :root {
   --text: #6b6375;

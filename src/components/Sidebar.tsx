@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import type React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -8,21 +9,40 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const navItems = [
         { name: "Đối tác", id: "partner" },
         { name: "Sự kiện", id: "experience" },
         { name: "Thư viện", id: "gallery" },
+        { name: "Artist", id: "art" },
+        { name: "Photographer", id: "pt" },
         { name: "FAQ", id: "faq" },
     ];
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-            setIsOpen(false); // Đóng sidebar sau khi bấm
+    const handleNavigation = (id: string) => {
+        setIsOpen(false); // Đóng sidebar sau khi bấm
+        if (id === 'art') {
+            navigate('/artist');
+        } else if (id === 'home') {
+             navigate('/');
+             setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+        } else {
+            if (location.pathname !== '/') {
+                navigate('/');
+                setTimeout(() => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }, 100);
+            } else {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
         }
     };
     return (
@@ -55,7 +75,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                         {/* Nút đóng X */}
                         <div className=" w-full mb-12 border-b border-white/10 pb-2">
                             <div className="p-4 flex justify-between items-center">
-                                <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => scrollToSection('home')}>
+                                <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => handleNavigation('home')}>
                                     MINNA FESTIVAL
                                 </h3>
                                 <X className="text-white cursor-pointer" onClick={() => setIsOpen(false)} size={28} />
@@ -68,7 +88,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                                 <li
                                     key={item.id}
                                     className="hover:text-[#77a8fa] transition-all active:scale-95 cursor-pointer"
-                                    onClick={() => scrollToSection(item.id)}
+                                    onClick={() => handleNavigation(item.id)}
                                 >
                                     {item.name}
                                 </li>

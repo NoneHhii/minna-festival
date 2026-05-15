@@ -147,7 +147,7 @@ export const HomePage: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen flex justify-center relative overflow-clip">
-            <ChibiMascot/>
+            <ChibiMascot />
             <div className="w-full">
                 <div className="bg-[#16171d] h-screen justify-center flex flex-col gap-10 px-2" id="home">
                     <div className="text-center text-white flex flex-col gap-10">
@@ -355,10 +355,10 @@ export const HomePage: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6">
+                            <h2 className="p-3 text-4xl md:text-6xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6">
                                 🌟 Khách mời đặc biệt
                             </h2>
-                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                            <p className="text-md text-gray-600 max-w-2xl mx-auto">
                                 Gặp gỡ những cosplayer, nhiếp ảnh gia và makeup artist hàng đầu sẽ góp mặt tại Minna Festival
                             </p>
                         </motion.div>

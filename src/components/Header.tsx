@@ -1,6 +1,7 @@
 import type React from "react";
 // import { useEffect } from "react";
 import { Menu } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface props {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -8,14 +9,31 @@ interface props {
 
 export const Header: React.FC<props> = ({ setIsOpen }) => {
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-            setIsOpen(false); // Đóng sidebar sau khi bấm
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleNavigation = (id: string) => {
+        setIsOpen(false); // Đóng sidebar sau khi bấm
+        if (id === 'art') {
+            navigate('/artist');
+        } else if (id === 'home') {
+            navigate('/');
+            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+        } else {
+            if (location.pathname !== '/') {
+                navigate('/');
+                setTimeout(() => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }, 100);
+            } else {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
         }
     };
 
@@ -23,6 +41,8 @@ export const Header: React.FC<props> = ({ setIsOpen }) => {
         { name: "Đối tác", id: "partner" },
         { name: "Sự kiện", id: "experience" },
         { name: "Thư viện", id: "gallery" },
+        { name: "Artist", id: "art" },
+        { name: "Photographer", id: "pt" },
         { name: "FAQ", id: "faq" },
     ];
 
@@ -35,9 +55,9 @@ export const Header: React.FC<props> = ({ setIsOpen }) => {
     // }, [isOpen]);
 
     return (
-        <header className="bg-black/90 backdrop-blur-md top-0 sticky z-100 flex justify-between items-center p-4 px-6 md:px-10">
+        <header className="bg-black/90 backdrop-blur-md top-0 sticky z-[100] flex justify-between items-center p-4 px-6 md:px-10">
             {/* Logo */}
-            <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => scrollToSection('home')}>
+            <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => handleNavigation('home')}>
                 MINNA FESTIVAL
             </h3>
 
@@ -48,7 +68,7 @@ export const Header: React.FC<props> = ({ setIsOpen }) => {
                         <li
                             key={item.id}
                             className="cursor-pointer hover:text-[#77a8fa] transition-colors"
-                            onClick={() => scrollToSection(item.id)}
+                            onClick={() => handleNavigation(item.id)}
                         >
                             {item.name}
                         </li>

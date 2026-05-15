@@ -1,15 +1,14 @@
-import {motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Guest } from "../data/guest";
 
 const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index }) => {
     return (
         <motion.div
-            className={`flex flex-col-reverse ${guest.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} 
-                       items-center justify-center px-10 gap-12 py-16 bg-gradient-to-r ${
-                           guest.reverse 
-                               ? 'from-blue-50/50 to-purple-50/50' 
-                               : 'from-purple-50/50 to-blue-50/50'
-                       }`}
+            className={`flex flex-col ${guest.reverse ? 'md:flex-row-reverse' : 'md:flex-row'} 
+                       items-center justify-center px-10 gap-12 py-16 bg-gradient-to-r ${guest.reverse
+                    ? 'from-blue-50/50 to-purple-50/50'
+                    : 'from-purple-50/50 to-blue-50/50'
+                }`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -17,20 +16,20 @@ const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index 
         >
             {/* Image Section */}
             <motion.div
-                className="flex-1 flex justify-center max-w-[400px] md:max-w-[450px]"
+                className="flex-1 flex justify-center max-w-[400px] md:max-w-[500px]"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
             >
                 <div className="relative group">
-                    <img 
-                        src={guest.image} 
+                    <img
+                        src={guest.image}
                         alt={guest.name}
                         className="w-full h-[400px] md:h-[450px] object-cover rounded-3xl shadow-2xl 
-                                   group-hover:shadow-purple-500/25 transition-all duration-500" 
+                                   group-hover:shadow-purple-500/25 transition-all duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent 
                                    opacity-0 group-hover:opacity-100 transition-all duration-500 
-                                   rounded-3xl flex items-end p-6">
+                                   rounded-3xl flex items-end px-6">
                         <span className="text-white font-bold text-lg drop-shadow-lg">
                             ✨ {guest.name}
                         </span>
@@ -39,7 +38,7 @@ const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index 
             </motion.div>
 
             {/* Content Section */}
-            <motion.div 
+            <motion.div
                 className="flex-1 max-w-lg flex flex-col gap-6 text-center md:text-left"
                 initial={{ x: guest.reverse ? 50 : -50, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
