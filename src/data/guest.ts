@@ -88,7 +88,7 @@ export const guests: Guest[] = [
             "Khách mời biểu diễn của Touch Fes",
             "Giành được nhiều giải thưởng về cosplay và trình diễn",
         ],
-        image: vguess4,
+        image: vguess6,
         reverse: true,
     }
 ];

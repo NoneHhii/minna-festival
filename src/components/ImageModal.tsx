@@ -9,7 +9,7 @@ interface ImageModalProps {
     artistName: string;
 }
 
-export const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, images, artistName }) => {
+export const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onClose, images, }) => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     useEffect(() => {
