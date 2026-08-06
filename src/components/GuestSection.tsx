@@ -34,41 +34,42 @@ const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index 
                 </div>
             </motion.div>
 
-            {/* Content Section */}
+            {/* Content Section - Đã responsive chữ & lề */}
             <motion.div
-                className="flex-1 max-w-lg flex flex-col gap-6 text-center md:text-left"
+                className="flex-1 max-w-lg flex flex-col gap-4 md:gap-6 text-left md:text-left items-start"
                 initial={{ x: guest.reverse ? 50 : -50, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <div className="space-y-3">
-                    <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-r 
+                <div className="space-y-1 md:space-y-3">
+                    <h3 className="text-2xl sm:text-3xl md:text-5xl font-black bg-gradient-to-r 
                                   from-slate-100 via-cyan-200 to-slate-400 bg-clip-text text-transparent">
                         {guest.name}
                     </h3>
-                    <p className="text-xl font-bold text-slate-300">{guest.title}</p>
+                    <p className="text-base sm:text-lg md:text-xl font-bold text-slate-300">{guest.title}</p>
                 </div>
 
-                <p className="text-lg leading-relaxed text-slate-400">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-400">
                     {guest.description}
                 </p>
 
-                <div className="space-y-2">
-                    <p className="font-semibold text-slate-200 text-lg">🏆 Thành tích nổi bật:</p>
-                    <ul className="space-y-1">
+                <div className="space-y-2 w-full">
+                    <p className="font-semibold text-slate-200 text-base md:text-lg">🏆 Thành tích nổi bật:</p>
+                    <ul className="space-y-2.5 md:space-y-1">
                         {guest.achievements.map((achievement, idx) => (
                             <motion.li
                                 key={idx}
-                                className="flex items-center gap-3 text-slate-400 pl-6 relative before:absolute 
-                                           before:left-0 before:w-2 before:h-2 before:bg-slate-400/70 
-                                           before:rounded-full before:-translate-x-3"
+                                className="flex items-start gap-2 text-xs sm:text-sm md:text-base text-slate-400 pl-4 md:pl-6 relative before:absolute 
+                                           before:left-0 before:top-[0.55em] before:w-1.5 before:h-1.5 md:before:w-2 md:before:h-2 before:bg-slate-400/70 
+                                           before:rounded-full"
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                             >
-                                - {achievement}
+                                <span className="inline-block flex-shrink-0">-</span>
+                                <span>{achievement}</span>
                             </motion.li>
                         ))}
                     </ul>
@@ -76,9 +77,9 @@ const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index 
 
                 <motion.button
                     className="group relative w-fit bg-gradient-to-r from-slate-600 to-slate-500 
-                               text-white px-8 py-3 rounded-2xl font-semibold overflow-hidden 
+                               text-white px-6 py-2.5 md:px-8 md:py-3 rounded-2xl font-semibold overflow-hidden 
                                shadow-lg hover:shadow-cyan-400/20 transition-all duration-300
-                               md:self-start self-center"
+                               self-start text-sm md:text-base"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
@@ -87,7 +88,7 @@ const GuestSection: React.FC<{ guest: Guest; index: number }> = ({ guest, index 
                 >
                     <span className="relative z-10 flex items-center gap-2">
                         Xem Profile
-                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </span>
