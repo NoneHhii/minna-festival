@@ -6,6 +6,7 @@ import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar';
 import { HomePage } from './pages/HomePage'
 import { ArtistPage } from './pages/ArtistPage';
+import { PhotographerPage } from './pages/PhotographerPage';
 // import { MinnaNinja } from './components/MinnaNinja';
 
 const ScrollToTop = () => {
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/artist" element={<ArtistPage />} />
+          <Route path="/photographer" element={<PhotographerPage />} />
         </Routes>
         <Footer />
         {/* <MinnaNinja /> */}

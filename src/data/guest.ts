@@ -4,7 +4,8 @@ import vguess2 from "../assets/images/vguess2.jpg";
 import vguess3 from "../assets/images/vguess3.jpg";
 import vguess4 from "../assets/images/vguess4.jpg";
 import vguess5 from "../assets/images/vguess5.jpg";
-import vguess6 from "../assets/images/vguess5.jpg";
+import vguess6 from "../assets/images/vguess6.jpg";
+import vguess7 from "../assets/images/vguess7.jpg";
 // Thêm vào đầu file, sau các import khác
 export interface Guest {
     id: number;
@@ -14,25 +15,27 @@ export interface Guest {
     achievements: string[];
     image: string;
     reverse?: boolean; // true = text bên trái, ảnh bên phải
+    link?: string;
 }
 
 export const guests: Guest[] = [
     {
         id: 1,
-        name: "Sữa Tươi",
+        name: "Đông Phương",
         title: "Khách mời/Ban giám khảo",
-        description: "Bằng những content tiktok và gương mặt xinh đẹp, Sữa Tươi đã ghi dấu ấn mạnh mẽ trong cộng đồng cosplay Việt Nam.",
+        description: "Bằng những content tiktok và gương mặt xinh đẹp, thường xuyên có mặt trong các sự kiện lớn nhỏ, Đông Phương đã ghi dấu ấn mạnh mẽ trong cộng đồng cosplay Việt Nam.",
         achievements: [
-            "65,5k followers trên tiktok",
-            "Hơn 50k followers trên Instagram"
+            "Chiến thắng cuộc thi Gicof",
+            "Đại diện Việt Nam đến Hàn"
         ],
         image: vguess1,
-        reverse: false
+        reverse: false,
+        link: "https://web.facebook.com/dongphuonggege"
     },
     {
         id: 2,
         name: "Tsuwii",
-        title: "Khách mời biểu diễn/Ban giám khảo",
+        title: "Khách mời/MC",
         description: "Một nữ cosplayer đa tài, luôn mang đến năng lượng tích cực.",
         achievements: [
             "8k followers trên các nền tảng MXH",
@@ -40,7 +43,8 @@ export const guests: Guest[] = [
             "Cựu thành viên Niji Universe",
         ],
         image: vguess2,
-        reverse: true
+        reverse: true,
+        link: "https://web.facebook.com/tsuwiituyetquynh"
     },
     {
         id: 3,
@@ -49,15 +53,17 @@ export const guests: Guest[] = [
         description: "Hoa hậu kiêm cosplayer, từng phá đảo rất nhiều giải thưởng nổi bật",
         achievements: [
             "Á HẬU SIÊU MẪU THỂ HÌNH THẾ GIỚI 2025",
+            "TOP 30 MISS GRAND VIETNAM 2026"
         ],
         image: vguess3,
-        reverse: false
+        reverse: false,
+        link: "https://web.facebook.com/ahri.nguyen.1108"
     },
     {
         id: 4,
         name: "Bo Gumiho",
-        title: "MC",
-        description: "Một MC duyên dáng, đóng vai trò cầm cân nảy mực cho chương trình, là người giữ lửa cho các thí sinh.",
+        title: "Khách mời/Ban giám khảo",
+        description: "Một nam cosplayer duyên dáng, đóng vai trò cầm cân nảy mực cho chương trình, là người giữ lửa cho các thí sinh.",
         achievements: [
             "MC của chuỗi Manga Series",
             "Khách mời biểu diễn của Blossom Day",
@@ -65,30 +71,43 @@ export const guests: Guest[] = [
         ],
         image: vguess4,
         reverse: true,
+        link: "https://web.facebook.com/BoGumiho"
     },
     {
         id: 5,
-        name: "S+EIGHT Entertainment",
+        name: "BUNNY SiGNAL",
         title: "Khách mời biểu diễn",
-        description: "Nhóm nhảy cosplayer phủ sóng rất nhiều festival ở Hồ Chí Minh, quy tụ những cosplayer tài năng về ca hát, nhảy múa và diễn xuất.",
+        description: "Nhóm nhảy \"mới\" quy tụ những \"idol\" tài năng về ca hát, nhảy múa.",
         achievements: [
-            "79,6k subcribe trên youtube",
             "Khách mời biểu diễn của nhiều festival",
         ],
         image: vguess5,
         reverse: false,
+        link: "https://web.facebook.com/bunnysignal.official"
     },
     {
         id: 6,
-        name: "M1YU",
+        name: "Vinameo Project",
         title: "Khách mời biểu diễn",
-        description: "Gương mặt quen thuộc của các cosplayer mỗi dịp festival, chinh chiến nhiều cuộc thi và giành chiến thắng",
+        description: "Những cô nàng đáng yêu sẽ mang đến cho chúng ta những tiết mục thật đặc biệt",
         achievements: [
-            "Quán quân Minna mùa 4",
-            "Khách mời biểu diễn của Touch Fes",
-            "Giành được nhiều giải thưởng về cosplay và trình diễn",
+            "Quán quân Pop Culture Hiroshima 2024",
+            "Giải ba Haru Got Talent 2026"
         ],
         image: vguess6,
         reverse: true,
+        link: "https://web.facebook.com/profile.php?id=61587787212871"
+    },
+    {
+        id: 7,
+        name: "HEPIHEPI",
+        title: "Khách mời biểu diễn",
+        description: "Nhóm nhạc idol Việt Nam - mang xu hướng âm nhạc Nhật Bản",
+        achievements: [
+            "Em trong mắt anh - 265k lượt view trên Youtube"
+        ],
+        image: vguess7,
+        reverse: false,
+        link: "https://web.facebook.com/hepihepivn"
     }
 ];

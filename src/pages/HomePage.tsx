@@ -2,18 +2,15 @@ import type React from "react";
 import brand1 from "../assets/images/brand1.jpg";
 import brand2 from "../assets/images/brand2.jpg";
 import brand3 from "../assets/images/brand3.jpg";
-// import brand4 from "../assets/images/brand4.jpg";
 import min1 from "../assets/images/min1.jpg";
 import min2 from "../assets/images/min2.jpg";
 import min3 from "../assets/images/min3.jpg";
-// import min4 from "../assets/images/min4.jpg";
-// import minnaPic from "../assets/images/minnaPic.jpg";
 import parcmall from "../assets/images/parcmall.png";
 import mascotParcmall from "../assets/images/mascotParcmall.png";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-// import { MotionItems } from "../components/motionItem";
-//gallery
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import moon from "../assets/images/moon.svg"
+
 import gallery1 from "../assets/images/gallery1.jpg";
 import gallery2 from "../assets/images/gallery2.jpg";
 import gallery3 from "../assets/images/gallery3.jpg";
@@ -23,19 +20,13 @@ import gallery6 from "../assets/images/gallery6.jpg";
 import gallery7 from "../assets/images/gallery7.jpg";
 import gallery8 from "../assets/images/gallery8.jpg";
 import gallery9 from "../assets/images/gallery9.jpg";
-import { ChevronDown } from "lucide-react";
+import { Calendar, CheckCircle2, ChevronDown, Moon, Sparkles } from "lucide-react";
 import { guests } from "../data/guest";
 import GuestSection from "../components/GuestSection";
 import ChibiMascot from "../components/ChibiMascot";
+import { SparkleStars } from "../components/SparkleStars";
 
-const imgBrand: string[] = [
-    brand1,
-    brand2,
-    brand3,
-    min1,
-    min2,
-    min3
-]
+const imgBrand: string[] = [brand1, brand2, brand3, min1, min2, min3];
 
 interface PhotoItem {
     id: number;
@@ -45,61 +36,16 @@ interface PhotoItem {
 }
 
 const gallery: PhotoItem[] = [
-    {
-        id: 1,
-        src: gallery1,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-7",
-    },
-    {
-        id: 2,
-        src: gallery2,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-4",
-    },
-    {
-        id: 3,
-        src: gallery3,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-4",
-    },
-    {
-        id: 4,
-        src: gallery4,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-2",
-    },
-    {
-        id: 5,
-        src: gallery5,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-5",
-    },
-    {
-        id: 6,
-        src: gallery6,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-5",
-    },
-    {
-        id: 7,
-        src: gallery9,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-3",
-    },
-    {
-        id: 8,
-        src: gallery8,
-        colSpan: "md:col-span-1", // Một tấm ảnh rộng (chiếm 2 cột)
-        rowSpan: "row-span-4 md:row-span-3",
-    },
-    {
-        id: 9,
-        src: gallery7,
-        colSpan: "md:col-span-1",
-        rowSpan: "row-span-2",
-    },
-]
+    { id: 1, src: gallery1, colSpan: "md:col-span-1", rowSpan: "row-span-7" },
+    { id: 2, src: gallery2, colSpan: "md:col-span-1", rowSpan: "row-span-4" },
+    { id: 3, src: gallery3, colSpan: "md:col-span-1", rowSpan: "row-span-4" },
+    { id: 4, src: gallery4, colSpan: "md:col-span-1", rowSpan: "row-span-2" },
+    { id: 5, src: gallery5, colSpan: "md:col-span-1", rowSpan: "row-span-5" },
+    { id: 6, src: gallery6, colSpan: "md:col-span-1", rowSpan: "row-span-5" },
+    { id: 7, src: gallery9, colSpan: "md:col-span-1", rowSpan: "row-span-3" },
+    { id: 8, src: gallery8, colSpan: "md:col-span-1", rowSpan: "row-span-4 md:row-span-3" },
+    { id: 9, src: gallery7, colSpan: "md:col-span-1", rowSpan: "row-span-2" },
+];
 
 interface FAQItem {
     question: string;
@@ -123,12 +69,27 @@ const faqData: FAQItem[] = [
 
 export const HomePage: React.FC = () => {
     const [show, setShow] = useState(true);
-    // const [currentScroll, setCurrentScroll] = useState(window.scroll);
     const [activeId, setActiveId] = useState<number | null>(null);
+
+    // ==========================================
+    //   SMART SCROLL ANIMATION FOR MOONSET & ECLIPSE
+    // ==========================================
+    const { scrollYProgress } = useScroll();
+
+    // 1. Tọa độ Y: Lặn dần xuống theo nhịp cuộn
+    const moonY = useTransform(scrollYProgress, [0, 0.75, 1], ["0%", "75%", "140%"]);
+
+    // 2. Co giãn: Đầu trang to vừa tầm (1) -> Lên giữa trang nhỏ lại (0.55) -> Ẩn ở chân trang
+    const moonScale = useTransform(scrollYProgress, [0, 0.5, 0.9], [1, 0.55, 0.25]);
+
+    // 3. Opacity (Triệt tiêu lỗi đè Footer): Cuộn đến 85% trang là mờ hẳn về 0
+    const moonOpacity = useTransform(scrollYProgress, [0, 0.4, 0.82, 0.92], [1, 0.45, 0.1, 0]);
+
+    // 4. Xoay góc nhẹ tự nhiên khi lướt
+    const moonRotate = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
     useEffect(() => {
         const handleScroll = () => {
-            // Nếu cuộn quá 300px thì hiện nút, ngược lại thì ẩn
             if (window.scrollY > 300) {
                 setShow(true);
             } else {
@@ -136,231 +97,262 @@ export const HomePage: React.FC = () => {
             }
         };
 
-        // Đăng ký sự kiện scroll
         window.addEventListener("scroll", handleScroll);
-
-        // Cleanup function để tránh rò rỉ bộ nhớ khi component bị unmount
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
-        <div className="w-full min-h-screen flex justify-center relative overflow-clip">
+        <div className="w-full min-h-screen bg-[#050714] flex justify-center relative overflow-clip text-slate-100">
             <ChibiMascot />
-            <div className="w-full">
-                <div className="bg-[#16171d] h-screen justify-center flex flex-col gap-10 px-2" id="home">
-                    <div className="text-center text-white flex flex-col gap-10">
-                        <h2 className="text-6xl font-bold">Welcome to Minna festival</h2>
-                        <p className="text-[18px]">Nơi để mọi người đặt câu hỏi, đăng nhận diện, tìm dàn, tìm partner, tìm ptg, tìm MUA, tìm từa lưa…</p>
+
+            <SparkleStars />
+
+            {/* {Moon */}
+            <motion.div
+                style={{
+                    y: moonY,
+                    scale: moonScale,
+                    // GIẢM OPACITY TỔNG: Đầu trang mờ nhẹ ở mức 0.75 (thay vì 1.0)
+                    opacity: useTransform(scrollYProgress, [0, 0.4, 0.82, 0.92], [0.75, 0.35, 0.08, 0]),
+                    rotate: moonRotate,
+                }}
+                className="fixed top-[5%] left-[50%] -translate-x-1/2 pointer-events-none z-0 transition-opacity duration-300"
+            >
+                {/* Hào quang tỏa xa - Giảm độ mờ xuống 15% cho dịu mắt */}
+                <div className="absolute -inset-24 rounded-full bg-cyan-300/15 blur-[120px] animate-pulse" />
+                
+                {/* Hào quang lõi - Giảm độ mờ xuống 20% */}
+                <div className="absolute -inset-6 rounded-full bg-cyan-100/20 blur-[40px]" />
+
+                {/* KHỐI CHỨA HÌNH SÁNG SVG */}
+                <div className="relative w-80 h-80 md:w-[440px] md:h-[440px] rounded-full overflow-hidden drop-shadow-[0_0_30px_rgba(186,230,253,0.4)]">
+                    {/* Render file SVG với độ mờ dịu (opacity-80) và giảm độ chói (brightness-95 contrast-110) */}
+                    <img
+                        src={moon}
+                        alt="Supermoon SVG"
+                        className="w-full h-full object-cover rounded-full mix-blend-screen filter brightness-95 contrast-110 opacity-80 scale-[1.02]"
+                    />
+
+                    {/* Lớp mây trôi vắt nhẹ qua Mặt Trăng */}
+                    <motion.div 
+                        animate={{ x: ["-20%", "20%", "-20%"] }}
+                        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-300/10 to-transparent blur-md"
+                    />
+                </div>
+            </motion.div>
+
+            <div className="w-full relative z-10">
+                {/* Hero Section */}
+                <div
+                    className="relative isolate overflow-hidden min-h-screen justify-center flex flex-col items-center gap-8 px-4 md:px-8 pt-16"
+                    id="home"
+                    style={{
+                        background: "radial-gradient(circle at 50% 30%, rgba(14,165,233,0.15) 0%, rgba(6,8,20,0.85) 50%, #050714 100%)"
+                    }}
+                >
+                    <div className="relative z-10 text-center flex flex-col items-center gap-6 mt-20 md:mt-28">
+                        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-cyan-300/40 bg-slate-950/60 backdrop-blur-md text-cyan-200 text-sm shadow-[0_0_20px_rgba(56,189,248,0.3)]">
+                            <Moon className="w-4 h-4 text-cyan-300 animate-pulse" />
+                            <span className="font-semibold tracking-wide"> Moon of Minna Festival ✨</span>
+                        </div>
+
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-b from-white via-slate-100 to-cyan-200 bg-clip-text text-transparent drop-shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
+                            Welcome to Minna Festival
+                        </h2>
+                        <p className="text-base md:text-lg text-slate-300 max-w-2xl font-light leading-relaxed drop-shadow">
+                            Hội tụ dưới ánh trăng lấp lánh - Nơi các cosplayer, MUA, photographer tỏa sáng và kết nối đam mê...
+                        </p>
                     </div>
-                    <div className="justify-center flex text-sm font-bold gap-2 my-5">
-                        <button className="p-2 px-3 bg-white rounded-full">Know more</button>
-                        <button className="p-2 px-3 text-white rounded-full border border-[#33FFFFFF]">Learn more</button>
+
+                    <div className="relative z-10 justify-center flex text-sm font-bold gap-4 my-2">
+                        <a className="relative group overflow-hidden px-8 py-3 bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 text-slate-950 font-bold rounded-full shadow-[0_0_25px_rgba(56,189,248,0.5)] hover:shadow-[0_0_35px_rgba(56,189,248,0.8)] hover:scale-105 transition-all duration-300 cursor-pointer"
+                            href="https://web.facebook.com/profile.php?id=61570964570675"
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                Know more <Sparkles className="w-4 h-4" />
+                            </span>
+                            <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                        </a>
+
+                        {/* <button className="px-7 py-3 text-slate-200 rounded-full border border-cyan-300/30 bg-slate-900/60 backdrop-blur-md hover:bg-slate-800/80 hover:border-cyan-300/60 transition-all duration-300 cursor-pointer">
+                            Learn more
+                        </button> */}
                     </div>
-                    <div className="flex justify-center gap-3 mb-8">
-                        {imgBrand.map((url) => (
+
+                    <div className="relative z-10 flex justify-center gap-4 mb-8 flex-wrap mt-4">
+                        {imgBrand.map((url, idx) => (
                             <div
-                                className={`flex 
-                                    transition-all duration-300 ease-in-out
-                                    hover:-translate-y-2 hover:scale-105 hover:shadow-2xl
-                                    hover:border-red-500/50`}
+                                key={idx}
+                                className="flex transition-all duration-300 ease-in-out hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] border border-cyan-500/30 rounded-2xl overflow-hidden bg-slate-900/60 backdrop-blur-sm"
                             >
-                                <img src={url} alt="" className="rounded-2xl contain" />
+                                <img src={url} alt="" className="rounded-2xl contain h-20 w-auto object-cover" />
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Partner */}
-                <div className="bg-white p-3 flex flex-col items-center" id="partner">
-                    <p className="font-bold text-2xl my-3">Our Partners</p>
-                    <a href="https://parcmall.com.vn/" className="mt-3">
-                        <img src={parcmall} alt="" className="md:w-30 md:h-15" />
+                {/* Partner Section */}
+                <div className="bg-[#080d1f]/80 backdrop-blur-md border-y border-cyan-500/20 p-4 flex flex-col items-center" id="partner">
+                    {/* <p className="font-bold text-xl my-2 text-cyan-200 tracking-wide flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-cyan-300" /> Our Partners
+                    </p> */}
+                    <a href="https://parcmall.com.vn/" className="mt-2 hover:opacity-100 transition-opacity">
+                        <img src={parcmall} alt="" className="md:w-32 opacity-80 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
                     </a>
                 </div>
 
-                {/* Partner Infrom */}
+                {/* Partner Inform */}
                 <motion.div
-                    className="bg-white flex flex-col-reverse md:flex-row items-center justify-center px-10 gap-20 py-10"
+                    className="bg-gradient-to-br from-[#0a0e24]/90 via-[#0d1330]/90 to-[#060814]/90 backdrop-blur-sm flex flex-col-reverse md:flex-row items-center justify-center px-10 gap-20 py-16 border-b border-cyan-500/10"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-
                 >
-                    <div className="flex-1 max-w-lg flex flex-col gap-10">
-                        <p className="text-2xl font-bold text-green-600">
-                            Pama - Colorful Baby Dragon
+                    <div className="flex-1 max-w-lg flex flex-col gap-6">
+                        <p className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-400">
+                            ParcMall - Điểm đến muôn màu
                         </p>
-                        <p className="text-sm text-gray-700">
-                            PARC MALL lấy cảm hứng từ những công viên đầy màu sắc,
-                            nơi mọi người kết nối với nhau và tìm lại nguồn năng lượng tươi mới cho chính mình
-                            hướng đến hình ảnh “MỘT ĐIỂM ĐẾN - NHIỀU SỰ LỰA CHỌN” một không gian mua sắm giải trí sôi động,
-                            hiện đại, đầy cảm hứng.
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                            PARC MALL lấy cảm hứng từ những công viên đầy màu sắc, nơi mọi người kết nối với nhau và tìm lại nguồn năng lượng tươi mới cho chính mình hướng đến hình ảnh “MỘT ĐIỂM ĐẾN - NHIỀU SỰ LỰA CHỌN”.
                         </p>
-                        <p className="text-sm text-gray-700">
-                            Đến với PARC MALL, bạn không chỉ tìm thấy những sản phẩm đa dạng từ khắp nơi
-                            trên thế giới, mà còn được PAMA đồng hành, biến mỗi chuyến mua sắm thành một
-                            cuộc phiêu lưu muôn màu. Hãy để PAMA dẫn dắt bạn khám phá mọi góc của trung tâm
-                            thương mại, nơi mọi người có thể tìm thấy niềm vui và sự ngạc nhiên.
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                            Đến với PARC MALL dưới không gian ánh trăng nhiệm màu, PAMA sẽ đồng hành biến mỗi chuyến mua sắm thành một cuộc phiêu lưu đáng nhớ.
                         </p>
                         <button
-                            className="relative text-white bg-blue-500 px-3 py-1 overflow-hidden group rounded-sm w-[100px] cursor-pointer"
+                            className="relative text-cyan-950 font-bold bg-cyan-300 px-4 py-2 overflow-hidden group rounded-lg w-[120px] cursor-pointer hover:bg-cyan-200 shadow-md shadow-cyan-500/20 transition-all duration-300"
                             onClick={() => {
                                 window.location.href = 'https://parcmall.com.vn/about-us/';
                             }}
                         >
-                            <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-2">
+                            <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-1">
                                 Know More
                             </p>
-                            <span
-                                className="absolute right-4 opacity-0 transition-all
-                                            duration-300 translate-x-0 
-                                            group-hover:opacity-100 group-hover:translate-x-3"
-                            >
+                            <span className="absolute right-3 opacity-0 transition-all duration-300 translate-x-0 group-hover:opacity-100 group-hover:translate-x-1">
                                 →
                             </span>
                         </button>
                     </div>
-                    <div
-                        className="
-                            justify-center flex-1 flex max-w-[450px]
-                            transition-all duration-300 ease-in-out
-                            hover:scale-105
-                        "
-                    >
-                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[300px] md:max-w-[450px] object-contain" />
+                    <div className="justify-center flex-1 flex max-w-[450px] transition-all duration-300 ease-in-out hover:scale-105">
+                        <img src={mascotParcmall} alt="" className="rounded-2xl max-w-[280px] md:max-w-[380px] object-contain drop-shadow-[0_0_25px_rgba(56,189,248,0.25)]" />
                     </div>
                 </motion.div>
 
-                {/* event */}
-                <div className="bg-black min-h-screen" id="experience">
-                    {/* <MotionItems
-                        title="Cosplay luggage"
-                        content="All weapons, accessories (props), and costumes are welcome.
-                                Register for character identification, find professional makeup artists,
-                                or high-quality photos directly on the platform.
-                                Take check-in photos and preserve festival memories."
-                        reverse={true}
-                        src={mascotParcmall}
-                    />
-
-                    <MotionItems
-                        title="Shining Stage"
-                        content="Participate in Cosplay Runway competitions, 
-                                skit performances, or simply stroll through the streets and connect with the 
-                                community. Register your entry, upload your music and script live. 
-                                Let everyone see your passion."
-                        reverse={true}
-                        src={mascotParcmall}
-                    /> */}
+                {/* Event Section */}
+                <div className="bg-gradient-to-b from-[#060814]/90 via-[#0b1028]/90 to-[#060814]/90 backdrop-blur-sm min-h-screen py-10" id="experience">
                     <motion.div
-                        className="flex flex-col-reverse md:flex-row-reverse items-center justify-center px-10 gap-20 py-10"
+                        className="flex flex-col-reverse md:flex-row-reverse items-center justify-center px-10 gap-20 py-12"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="flex-1 max-w-lg flex flex-col gap-10 text-white">
-                            <p className="text-2xl font-bold">
-                                Cosplay luggage
+                        <div className="flex-1 max-w-lg flex flex-col gap-6 text-slate-100">
+                            <p className="text-3xl font-bold bg-gradient-to-r from-slate-100 to-cyan-300 bg-clip-text text-transparent">
+                                Best cos walk
                             </p>
-                            <p className="text-sm">
-                                "All weapons, accessories (props), and costumes are welcome.
-                                Register for character identification, find professional makeup artists,
-                                or high-quality photos directly on the platform.
-                                Take check-in photos and preserve festival memories."
-                            </p>
+                            <ul className="flex flex-col gap-3 text-slate-300">
+                                <li className="flex items-start gap-3">
+                                    <Moon className="w-4 h-4 text-cyan-300 flex-shrink-0 mt-1 animate-pulse" />
+                                    <span>Ưu tiên cosplayer cosplay các char liên quan đến mặt trăng</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <Sparkles className="w-4 h-4 text-cyan-300 flex-shrink-0 mt-1" />
+                                    <span>Số lượng gồm <strong>25 thí sinh</strong> đăng ký sớm và char hợp lệ</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <Calendar className="w-4 h-4 text-sky-400 flex-shrink-0 mt-1" />
+                                    <span>Thời gian đăng ký từ <strong>11/8 - 25/8</strong></span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1" />
+                                    <span>Công bố danh sách dự thi vào <strong>27/8</strong></span>
+                                </li>
+                            </ul>
                             <button
-                                className="relative text-white bg-blue-500 px-3 py-1 overflow-hidden group rounded-sm w-[100px] cursor-pointer"
+                                className="relative text-cyan-950 font-bold bg-cyan-300 px-4 py-2 overflow-hidden group rounded-lg w-[120px] cursor-pointer hover:bg-cyan-200 shadow-md shadow-cyan-500/20 transition-all duration-300"
                                 onClick={() => {
                                     window.location.href = 'https://docs.google.com/forms/d/1Jaukd5kXBMtC7Pm4ybAwQQK6rK3scEIWzF1caIKmNWE/edit?hl=vi';
                                 }}
                             >
-                                <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-2">
-                                    Know More
+                                <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-1">
+                                    Đăng ký
                                 </p>
-                                <span
-                                    className="absolute right-4 opacity-0 transition-all
-                                                duration-300 translate-x-0 
-                                                group-hover:opacity-100 group-hover:translate-x-3"
-                                >
+                                <span className="absolute right-3 opacity-0 transition-all duration-300 translate-x-0 group-hover:opacity-100 group-hover:translate-x-1">
                                     →
                                 </span>
                             </button>
                         </div>
-                        <div
-                            className="
-                                        justify-center flex-1 flex max-w-[450px]
-                                        transition-all duration-300 ease-in-out
-                                        hover:scale-105
-                                    "
-                        >
-                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[250px] object-contain" />
+                        <div className="justify-center flex-1 flex max-w-[450px] transition-all duration-300 ease-in-out hover:scale-105">
+                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[230px] object-contain border-2 border-cyan-400/30 p-2 shadow-[0_0_30px_rgba(56,189,248,0.2)] bg-cyan-950/30" />
                         </div>
                     </motion.div>
+
                     <motion.div
-                        className="flex flex-col-reverse md:flex-row items-center justify-center px-10 gap-20 py-10"
+                        className="flex flex-col-reverse md:flex-row items-center justify-center px-10 gap-20 py-12"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <div className="flex-1 max-w-lg flex flex-col gap-10 text-white">
-                            <p className="text-2xl font-bold">
-                                Shining Stage
+                        <div className="flex-1 max-w-lg flex flex-col gap-6 text-slate-100">
+                            <p className="text-3xl font-bold bg-gradient-to-r from-slate-100 to-blue-300 bg-clip-text text-transparent">
+                                Best cos talent
                             </p>
-                            <p className="text-sm">
-                                Participate in Cosplay Runway competitions,
-                                skit performances, or simply stroll through the streets and connect with the
-                                community. Register your entry, upload your music and script live.
-                                Let everyone see your passion.
-                            </p>
+                            <ul className="flex flex-col gap-3 text-slate-300">
+                                <li className="flex items-start gap-3">
+                                    <Moon className="w-4 h-4 text-cyan-300 flex-shrink-0 mt-1 animate-pulse" />
+                                    <span>Nội dung: nhảy hoặc diễn xuất</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <Sparkles className="w-4 h-4 text-cyan-300 flex-shrink-0 mt-1" />
+                                    <span>Số lượng gồm <strong>25 thí sinh</strong> đăng ký sớm và char hợp lệ</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <Calendar className="w-4 h-4 text-sky-400 flex-shrink-0 mt-1" />
+                                    <span>Thời gian đăng ký từ <strong>11/8 - 25/8</strong></span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-1" />
+                                    <span>Công bố danh sách dự thi vào <strong>27/8</strong></span>
+                                </li>
+                            </ul>
                             <button
-                                className="relative text-white bg-blue-500 px-3 py-1 overflow-hidden group rounded-sm w-[100px] cursor-pointer"
+                                className="relative text-cyan-950 font-bold bg-cyan-300 px-4 py-2 overflow-hidden group rounded-lg w-[120px] cursor-pointer hover:bg-cyan-200 shadow-md shadow-cyan-500/20 transition-all duration-300"
                                 onClick={() => {
                                     window.location.href = 'https://parcmall.com.vn/about-us/';
                                 }}
                             >
-                                <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-2">
-                                    Know More
+                                <p className="inline-block text-sm transition-transform duration-300 group-hover:-translate-x-1">
+                                    Đăng ký
                                 </p>
-                                <span
-                                    className="absolute right-4 opacity-0 transition-all
-                                                duration-300 translate-x-0 
-                                                group-hover:opacity-100 group-hover:translate-x-3"
-                                >
+                                <span className="absolute right-3 opacity-0 transition-all duration-300 translate-x-0 group-hover:opacity-100 group-hover:translate-x-1">
                                     →
                                 </span>
                             </button>
                         </div>
-                        <div
-                            className="
-                                justify-center flex-1 flex max-w-[450px]
-                                transition-all duration-300 ease-in-out
-                                hover:scale-105
-                            "
-                        >
-                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[250px] object-contain" />
+                        <div className="justify-center flex-1 flex max-w-[450px] transition-all duration-300 ease-in-out hover:scale-105">
+                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[230px] object-contain border-2 border-indigo-400/30 p-2 shadow-[0_0_30px_rgba(129,140,248,0.2)] bg-indigo-950/30" />
                         </div>
                     </motion.div>
                 </div>
 
-                <section className="py-20" id="guests">
+                {/* Guests Section */}
+                <section className="py-20 bg-gradient-to-b from-[#060814]/90 via-[#0d122b]/90 to-[#060814]/90 border-t border-cyan-500/10 backdrop-blur-sm" id="guests">
                     <div className="max-w-7xl mx-auto px-4">
                         <motion.div
-                            className="text-center mb-20"
+                            className="text-center mb-16"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="p-3 text-4xl md:text-6xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6">
-                                🌟 Khách mời đặc biệt
+                            <h2 className="p-3 text-4xl md:text-6xl font-black bg-gradient-to-r from-cyan-100 via-sky-200 to-indigo-300 bg-clip-text text-transparent mb-4 filter drop-shadow-[0_0_20px_rgba(56,189,248,0.3)] flex items-center justify-center gap-3">
+                                🌙 Khách mời ✨
                             </h2>
-                            <p className="text-md text-gray-600 max-w-2xl mx-auto">
-                                Gặp gỡ những cosplayer, nhiếp ảnh gia và makeup artist hàng đầu sẽ góp mặt tại Minna Festival
-                            </p>
+                            {/* <p className="text-md text-slate-300 max-w-2xl mx-auto font-light">
+                                Gặp gỡ những cosplayer, nhiếp ảnh gia và makeup artist hàng đầu sẽ hội tụ tại Minna Festival
+                            </p> */}
                         </motion.div>
 
                         <div className="space-y-0">
@@ -371,56 +363,50 @@ export const HomePage: React.FC = () => {
                     </div>
                 </section>
 
-                {/* Gallery */}
-                <section className="bg-white py-15 px-4 md:px-10" id="gallery">
+                {/* Gallery Section */}
+                <section className="bg-gradient-to-b from-[#060814]/90 via-[#090d21]/90 to-[#060814]/90 py-16 px-4 md:px-10 border-t border-white/5 backdrop-blur-sm" id="gallery">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Gallery</h2>
+                        <h2 className="text-3xl font-bold text-center mb-10 text-cyan-100 flex items-center justify-center gap-2">
+                            <Sparkles className="w-5 h-5 text-cyan-300 animate-pulse" /> Gallery Kỷ Niệm
+                        </h2>
                         <div className="grid grid-cols-2 md:grid-cols-5 grid-flow-dense gap-4 auto-rows-[80px]">
                             {gallery.map((photo) => (
                                 <div
                                     key={photo.id}
-                                    className={`${photo.colSpan} ${photo.rowSpan} group relative overflow-hidden rounded-3xl bg-gray-100 shadow-md transition-all duration-500 hover:shadow-xl hover:scale-[1.02]`}
+                                    className={`${photo.colSpan} ${photo.rowSpan} group relative overflow-hidden rounded-3xl bg-slate-900 border border-cyan-400/30 p-[1px] hover:border-cyan-300 shadow-lg shadow-black/50 transition-all duration-500 hover:shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:scale-[1.02]`}
                                 >
                                     <img
                                         src={photo.src}
                                         alt={`Minna Festival`}
-                                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        className="h-full w-full object-cover rounded-[23px] transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                                     />
-
-                                    {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <span className="text-white font-medium border border-white px-4 py-2 rounded-full scale-90 group-hover:scale-100 transition-transform">
-                                    View Moment
-                                </span>
-                            </div> */}
                                 </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* FAQ */}
-                <section className="bg-black py-20 px-4" id="faq">
+                {/* FAQ Section */}
+                <section className="bg-gradient-to-b from-[#060814]/95 to-[#03050c] py-20 px-4 border-t border-cyan-500/10 backdrop-blur-sm" id="faq">
                     <div className="max-w-3xl mx-auto">
-                        <h2 className="text-4xl font-bold text-white text-center mb-12">Câu hỏi thường gặp</h2>
+                        <h2 className="text-4xl font-bold text-slate-100 text-center mb-12">Câu hỏi thường gặp</h2>
 
                         <div className="space-y-4">
                             {faqData.map((item, index) => (
-                                <div key={index} className="border-b border-white/10">
-                                    {/* Câu hỏi */}
+                                <div key={index} className="border-b border-cyan-500/15">
                                     <button
                                         className="w-full flex justify-between items-center py-6 text-left text-white font-semibold text-lg group"
                                         onClick={() => setActiveId(activeId === index ? null : index)}
                                     >
-                                        <span className="group-hover:text-blue-500 transition-colors">{item.question}</span>
+                                        <span className="group-hover:text-cyan-300 transition-colors">{item.question}</span>
                                         <motion.div
                                             animate={{ rotate: activeId === index ? 180 : 0 }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            <ChevronDown className={`text-gray-400 ${activeId === index ? "text-blue-500" : ""}`} />
+                                            <ChevronDown className={`text-slate-400 ${activeId === index ? "text-cyan-400" : ""}`} />
                                         </motion.div>
                                     </button>
 
-                                    {/* Câu trả lời với Animation */}
                                     <AnimatePresence>
                                         {activeId === index && (
                                             <motion.div
@@ -430,7 +416,7 @@ export const HomePage: React.FC = () => {
                                                 transition={{ duration: 0.3, ease: "easeInOut" }}
                                                 className="overflow-hidden"
                                             >
-                                                <p className="pb-6 text-gray-400 leading-relaxed">
+                                                <p className="pb-6 text-slate-400 leading-relaxed font-light">
                                                     {item.answer}
                                                 </p>
                                             </motion.div>
@@ -442,13 +428,15 @@ export const HomePage: React.FC = () => {
                     </div>
                 </section>
             </div>
+
+            {/* Scroll-to-top Button Lấp Lánh */}
             <button
                 className={`
-        fixed bottom-10 right-10 z-50 p-4 bg-blue-600 text-white rounded-full 
-        shadow-lg transition-all duration-300 ease-in-out
-        ${show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50 pointer-events-none'}
-        hover:bg-blue-700 hover:shadow-blue-500/50 active:scale-95
-    `}
+                    fixed bottom-10 right-10 z-50 p-4 bg-gradient-to-tr from-cyan-400 to-blue-400 text-slate-950 rounded-full 
+                    shadow-[0_0_25px_rgba(56,189,248,0.5)] transition-all duration-300 ease-in-out
+                    ${show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50 pointer-events-none'}
+                    hover:scale-110 active:scale-95
+                `}
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
                 <svg
@@ -461,6 +449,6 @@ export const HomePage: React.FC = () => {
                     <path d="m18 15-6-6-6 6" />
                 </svg>
             </button>
-        </div >
+        </div>
     )
 }

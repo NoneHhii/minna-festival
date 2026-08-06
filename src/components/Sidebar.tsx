@@ -25,6 +25,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         setIsOpen(false); // Đóng sidebar sau khi bấm
         if (id === 'art') {
             navigate('/artist');
+        } else if (id === 'pt') {
+            navigate('/photographer');
         } else if (id === 'home') {
              navigate('/');
              setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
