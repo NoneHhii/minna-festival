@@ -83,7 +83,7 @@ export const HomePage: React.FC = () => {
     const moonScale = useTransform(scrollYProgress, [0, 0.5, 0.9], [1, 0.55, 0.25]);
 
     // 3. Opacity (Triệt tiêu lỗi đè Footer): Cuộn đến 85% trang là mờ hẳn về 0
-    const moonOpacity = useTransform(scrollYProgress, [0, 0.4, 0.82, 0.92], [1, 0.45, 0.1, 0]);
+    // const moonOpacity = useTransform(scrollYProgress, [0, 0.4, 0.82, 0.92], [1, 0.45, 0.1, 0]);
 
     // 4. Xoay góc nhẹ tự nhiên khi lướt
     const moonRotate = useTransform(scrollYProgress, [0, 1], [0, 60]);
