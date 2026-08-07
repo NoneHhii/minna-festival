@@ -6,7 +6,8 @@ import min1 from "../assets/images/min1.jpg";
 import min2 from "../assets/images/min2.jpg";
 import min3 from "../assets/images/min3.jpg";
 import parcmall from "../assets/images/parcmall.png";
-import mascotParcmall from "../assets/images/mascotParcmall.png";
+import bgEvent from "../assets/images/bg_event.png";
+import mascotParcmall from "../assets/images/logo.jpg";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import moon from "../assets/images/moon.svg";
@@ -21,8 +22,8 @@ import gallery7 from "../assets/images/gallery7.jpg";
 import gallery8 from "../assets/images/gallery8.jpg";
 import gallery9 from "../assets/images/gallery9.jpg";
 import { Calendar, CheckCircle2, ChevronDown, Moon, Sparkles } from "lucide-react";
-import { guests } from "../data/guest";
-import GuestSection from "../components/GuestSection";
+// import { guests } from "../data/guest";
+// import GuestSection from "../components/GuestSection";
 import ChibiMascot from "../components/ChibiMascot";
 import { SparkleStars } from "../components/SparkleStars";
 
@@ -277,7 +278,7 @@ export const HomePage: React.FC = () => {
                             </button>
                         </div>
                         <div className="justify-center flex-1 flex max-w-[450px] transition-all duration-300 ease-in-out hover:scale-105">
-                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[180px] sm:max-w-[230px] object-contain border-2 border-cyan-400/30 p-2 shadow-[0_0_30px_rgba(56,189,248,0.2)] bg-cyan-950/30" />
+                            <img src={bgEvent} alt="" className="rounded-full max-w-[180px] sm:max-w-[230px] object-contain border-2 border-cyan-400/30 p-2 shadow-[0_0_30px_rgba(56,189,248,0.2)] bg-cyan-950/30" />
                         </div>
                     </motion.div>
 
@@ -325,7 +326,7 @@ export const HomePage: React.FC = () => {
                             </button>
                         </div>
                         <div className="justify-center flex-1 flex max-w-[450px] transition-all duration-300 ease-in-out hover:scale-105">
-                            <img src={mascotParcmall} alt="" className="rounded-full max-w-[180px] sm:max-w-[230px] object-contain border-2 border-indigo-400/30 p-2 shadow-[0_0_30px_rgba(129,140,248,0.2)] bg-indigo-950/30" />
+                            <img src={bgEvent} alt="" className="rounded-full max-w-[180px] sm:max-w-[230px] object-contain border-2 border-indigo-400/30 p-2 shadow-[0_0_30px_rgba(129,140,248,0.2)] bg-indigo-950/30" />
                         </div>
                     </motion.div>
                 </div>
@@ -344,11 +345,39 @@ export const HomePage: React.FC = () => {
                             </h2>
                         </motion.div>
 
-                        <div className="space-y-0">
+                        {/* <div className="space-y-0">
                             {guests.map((guest, index) => (
                                 <GuestSection key={guest.id} guest={guest} index={index} />
                             ))}
-                        </div>
+                        </div> */}
+
+                        <motion.div 
+                            className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-slate-900/30 backdrop-blur-md p-8 sm:p-12 md:p-16 text-center shadow-[0_0_50px_rgba(6,8,20,0.6)] flex flex-col items-center justify-center min-h-[300px] sm:min-h-[380px]"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            {/* Đốm sáng hiệu ứng mờ ảo phía sau */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-cyan-500/10 blur-[80px] pointer-events-none" />
+
+                            <div className="relative z-10 flex flex-col items-center gap-3 sm:gap-4">
+                                {/* Badge hiệu ứng nhấp nháy */}
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-950/40 text-cyan-300 text-xs sm:text-sm font-medium shadow-[0_0_15px_rgba(56,189,248,0.2)]">
+                                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300 animate-pulse" />
+                                    <span>Secret Lineup</span>
+                                </div>
+
+                                {/* Tiêu đề Coming Soon nổi bật */}
+                                <h3 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-widest uppercase bg-gradient-to-b from-white via-cyan-100 to-slate-500 bg-clip-text text-transparent filter drop-shadow-[0_0_25px_rgba(56,189,248,0.3)] mt-2">
+                                    Coming Soon
+                                </h3>
+
+                                <p className="text-slate-400 font-light text-xs sm:text-base max-w-md mt-1 sm:mt-2 leading-relaxed">
+                                    Danh tính các khách mời đặc biệt sẽ được bật mí trong thời gian sắp tới. Hãy cùng đón chờ nhé!
+                                </p>
+                            </div>
+                        </motion.div>
                     </div>
                 </section>
 
