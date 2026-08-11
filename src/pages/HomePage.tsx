@@ -266,7 +266,7 @@ export const HomePage: React.FC = () => {
                             <button
                                 className="relative text-cyan-950 font-bold bg-cyan-300 px-4 py-2 overflow-hidden group rounded-lg w-[120px] cursor-pointer hover:bg-cyan-200 shadow-md shadow-cyan-500/20 transition-all duration-300 self-center md:self-start"
                                 onClick={() => {
-                                    window.location.href = 'https://docs.google.com/forms/d/1Jaukd5kXBMtC7Pm4ybAwQQK6rK3scEIWzF1caIKmNWE/edit?hl=vi';
+                                    window.location.href = 'https://forms.gle/TfXgkfHaDya9Mq4F9';
                                 }}
                             >
                                 <p className="inline-block text-xs sm:text-sm transition-transform duration-300 group-hover:-translate-x-1">
@@ -314,7 +314,7 @@ export const HomePage: React.FC = () => {
                             <button
                                 className="relative text-cyan-950 font-bold bg-cyan-300 px-4 py-2 overflow-hidden group rounded-lg w-[120px] cursor-pointer hover:bg-cyan-200 shadow-md shadow-cyan-500/20 transition-all duration-300 self-center md:self-start"
                                 onClick={() => {
-                                    window.location.href = 'https://parcmall.com.vn/about-us/';
+                                    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSe_9m1aijfLN-ub2JwOH22eA5UxmvP_QpI-wx-3PlfZz6Lu3w/viewform?usp=send_form';
                                 }}
                             >
                                 <p className="inline-block text-xs sm:text-sm transition-transform duration-300 group-hover:-translate-x-1">
