@@ -12,7 +12,11 @@ interface StarParticle {
     color: string;
 }
 
-export const SparkleStars: React.FC = () => {
+interface SparkleStarsProps {
+    count?: number; // Cho phép truyền số lượng sao mong muốn
+}
+
+export const SparkleStars: React.FC<SparkleStarsProps> = ({count = 260}) => {
     // Tạo ngẫu nhiên 30 ngôi sao trải dài từ top 0% đến 95% trang web
     const stars = useMemo<StarParticle[]>(() => {
         const colors = [
@@ -29,7 +33,7 @@ export const SparkleStars: React.FC = () => {
             'drop-shadow-[0_0_6px_rgba(255,255,255,0.7)]',
         ];
 
-        return Array.from({ length: 260 }).map((_, i) => ({
+        return Array.from({ length: count }).map((_, i) => ({
             id: i,
             // Rải đều theo từng nấc % từ top 1% đến 98%
             top: Number((Math.random() * 97 + 1).toFixed(2)),
