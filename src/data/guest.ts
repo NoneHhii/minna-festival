@@ -5,7 +5,7 @@
 // import vguess4 from "../assets/images/vguess4.jpg";
 import vguess5 from "../assets/images/vguess5.jpg";
 import vguess6 from "../assets/images/vguess6.jpg";
-// import vguess7 from "../assets/images/vguess7.jpg";
+import vguess7 from "../assets/images/vguess7.jpg";
 // Thêm vào đầu file, sau các import khác
 export interface Guest {
     id: number;
@@ -98,16 +98,16 @@ export const guests: Guest[] = [
         reverse: true,
         link: "https://web.facebook.com/profile.php?id=61587787212871"
     },
-    // {
-    //     id: 7,
-    //     name: "HEPIHEPI",
-    //     title: "Khách mời biểu diễn",
-    //     description: "Nhóm nhạc idol Việt Nam - mang xu hướng âm nhạc Nhật Bản",
-    //     achievements: [
-    //         "Em trong mắt anh - 265k lượt view trên Youtube"
-    //     ],
-    //     image: vguess7,
-    //     reverse: false,
-    //     link: "https://web.facebook.com/hepihepivn"
-    // }
+    {
+        id: 3,
+        name: "HEPIHEPI",
+        title: "Khách mời biểu diễn",
+        description: "Nhóm nhạc idol Việt Nam - mang xu hướng âm nhạc Nhật Bản",
+        achievements: [
+            "Em trong mắt anh - 265k lượt view trên Youtube"
+        ],
+        image: vguess7,
+        reverse: false,
+        link: "https://web.facebook.com/hepihepivn"
+    }
 ];

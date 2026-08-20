@@ -160,13 +160,12 @@ export const photographers: Photographer[] = [
         name: "Nhân Hứa",
         specialty: "Event Photography",
         description: "Bắt trọn từng khoảnh khắc đáng nhớ của bạn tại các lễ hội với màu sắc rực rỡ và tươi sáng.",
-        avatar: "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778898997/pt9_logo_xbbupe.png",
+        avatar: "https://res.cloudinary.com/dfytmfwjc/image/upload/v1787235124/pt9_logo_yle0cw.jpg",
         samples: [
-            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778899016/pt9_img1_vzayxp.jpg",
-            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778899018/pt9_img2_qh4q2s.jpg",
-            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778899021/pt9_img3_em0ltu.jpg",
-            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778899011/pt9_img4_gzsizu.jpg",
-            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1778899003/pt9_img5_yuk2g5.jpg"
+            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1787235133/pt9_img1_jnr17k.jpg",
+            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1787235132/pt9_img2_s4493j.jpg",
+            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1787235130/pt9_img3_boifiw.jpg",
+            "https://res.cloudinary.com/dfytmfwjc/image/upload/v1787235129/pt9_img4_dyoouk.jpg",
         ],
         fanpage: "https://www.google.com/url?q=https://www.facebook.com/share/19BUgLhpW7/&sa=D&source=editors&ust=1787156858936530&usg=AOvVaw0c0G-hX9-B81BSSEoVyYia",
         cost: ""
