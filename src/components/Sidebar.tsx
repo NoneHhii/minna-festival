@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { TreePine, X } from "lucide-react";
 import type React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -59,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                         onClick={(e) => {
                             if (e.target === e.currentTarget) setIsOpen(false);
                         }}
-                        className="fixed inset-0 bg-black/60 z-200 backdrop-blur-sm md:hidden h-full"
+                        className="fixed inset-0 bg-black/65 z-200 backdrop-blur-sm md:hidden h-full"
                     />
 
 
@@ -72,24 +72,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                             stiffness: 300,
                             damping: 30,
                         }}
-                        className="fixed right-0 top-0 h-full w-[80%] max-w-[350px] bg-[#16171d] z-300 flex flex-col md:hidden"
+                        className="fixed right-0 top-0 h-full w-[80%] max-w-[350px] bg-gradient-to-b from-[#0b191e] to-[#17090d] border-l border-amber-400/20 z-300 flex flex-col md:hidden"
                     >
                         {/* Nút đóng X */}
-                        <div className=" w-full mb-12 border-b border-white/10 pb-2">
+                        <div className="w-full mb-12 border-b border-amber-300/15 pb-2">
                             <div className="p-4 flex justify-between items-center">
-                                <h3 className="text-[#77a8fa] font-bold text-xl cursor-pointer" onClick={() => handleNavigation('home')}>
-                                    MINNA FESTIVAL
+                                <h3
+                                    className="flex items-center gap-2 font-extrabold text-xl cursor-pointer bg-gradient-to-r from-red-400 via-amber-200 to-emerald-300 bg-clip-text text-transparent"
+                                    onClick={() => handleNavigation('home')}
+                                >
+                                    <TreePine className="w-5 h-5 text-emerald-400" />
+                                    <span>MINNA FESTIVAL</span>
                                 </h3>
-                                <X className="text-white cursor-pointer" onClick={() => setIsOpen(false)} size={28} />
+                                <X className="text-amber-100 cursor-pointer" onClick={() => setIsOpen(false)} size={28} />
                             </div>
                         </div>
 
                         {/* Menu List */}
-                        <ul className="flex flex-col gap-7 text-white text-[20px] items-start justify-start flex-1 px-8">
+                        <ul className="flex flex-col gap-7 text-slate-100 text-[20px] items-start justify-start flex-1 px-8">
                             {navItems.map((item) => (
                                 <li
                                     key={item.id}
-                                    className="hover:text-[#77a8fa] transition-all active:scale-95 cursor-pointer"
+                                    className="hover:text-amber-300 transition-all active:scale-95 cursor-pointer"
                                     onClick={() => handleNavigation(item.id)}
                                 >
                                     {item.name}
@@ -98,9 +102,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                         </ul>
 
                         {/* Footer Sidebar */}
-                        <div className="border-t border-white/10 pt-4">
+                        <div className="border-t border-amber-300/15 pt-4">
                             <div className="mt-auto text-center pb-4">
-                                <p className="text-[#7d8791] text-xs uppercase tracking-[0.2em] mb-4">Connect</p>
+                                <p className="text-amber-200/60 text-xs uppercase tracking-[0.2em] mb-4">🎄 Merry Christmas ❄️</p>
                                 <p className="text-white text-lg">@minnafestival</p>
                             </div>
                         </div>

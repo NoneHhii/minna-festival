@@ -7,6 +7,7 @@ import { Sidebar } from './components/Sidebar';
 import { HomePage } from './pages/HomePage'
 import { ArtistPage } from './pages/ArtistPage';
 import { PhotographerPage } from './pages/PhotographerPage';
+import { FlyingSanta } from './components/FlyingSanta';
 // import { MinnaNinja } from './components/MinnaNinja';
 
 const ScrollToTop = () => {
@@ -28,6 +29,7 @@ function App() {
       <ScrollToTop />
       <div>
         <Header setIsOpen={setIsOpen} />
+        <FlyingSanta />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/artist" element={<ArtistPage />} />

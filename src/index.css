@@ -13,9 +13,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  /* Palette Xanh Đen Đêm Trăng (Moonlight Midnight) */
-  background: linear-gradient(135deg, #03050d 0%, #0a0f24 40%, #15102a 100%);
-  color: #f1f5f9;
+  /* Palette Đêm Giáng Sinh Huyền Diệu (Winter Evergreen & Velvet Night) */
+  background: linear-gradient(135deg, #040b0e 0%, #07171d 45%, #17080d 100%);
+  color: #f8fafc;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -24,21 +24,42 @@ body {
   background: transparent;
 }
 
-/* keyframes làm lấp lánh nhẹ nhàng */
-@keyframes sparkle {
-  0%, 100% { opacity: 0.2; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0.1;
-    transform: scale(0.6) rotate(0deg);
+/* Hiệu ứng bông tuyết rơi kết hợp đung đưa theo gió */
+@keyframes snowfall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--flake-opacity, 0.75);
   }
   50% {
-    opacity: 0.9;
-    transform: scale(1.2) rotate(15deg);
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+    transform: translate3d(var(--sway, 28px), 50vh, 0) rotate(180deg);
+  }
+  88% {
+    opacity: var(--flake-opacity, 0.75);
+  }
+  100% {
+    transform: translate3d(calc(var(--sway, 28px) * -0.6), 110vh, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-snowfall {
+  animation: snowfall linear infinite;
+  will-change: transform, opacity;
+}
+
+/* Hiệu ứng bông tuyết băng giá lấp lánh trên nền */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.12;
+    transform: scale(0.65) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15) rotate(45deg);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.75));
   }
 }
 
@@ -50,48 +71,59 @@ body {
   animation: sparkle 4s ease-in-out 1.5s infinite;
 }
 
-/* Viền lấp lánh ánh kim chuẩn Festival */
+/* Đèn nháy Giáng Sinh (Fairy Lights) */
+@keyframes bulbTwinkle {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.animate-bulb {
+  animation: bulbTwinkle 2.2s ease-in-out infinite;
+}
+
+/* Chân tuần lộc phi nước đại */
+@keyframes reindeerGallopA {
+  0%, 100% { transform: rotate(-22deg); }
+  50% { transform: rotate(24deg); }
+}
+
+@keyframes reindeerGallopB {
+  0%, 100% { transform: rotate(22deg); }
+  50% { transform: rotate(-24deg); }
+}
+
+.animate-leg-a {
+  animation: reindeerGallopA 0.55s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+.animate-leg-b {
+  animation: reindeerGallopB 0.55s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+/* Tay Ông Già Noel vẫy chào */
+@keyframes santaWave {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(18deg); }
+}
+
+.animate-santa-wave {
+  animation: santaWave 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: bottom left;
+}
+
+/* Viền lấp lánh ánh kim chuẩn Giáng Sinh */
 .festival-shimmer-border {
-  background: linear-gradient(90deg, rgba(56,189,248,0.2), rgba(255,255,255,0.6), rgba(129,140,248,0.2));
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.35), rgba(253, 224, 71, 0.75), rgba(16, 185, 129, 0.35));
   background-size: 200% 100%;
-  animation: shimmer 4s linear infinite;
-}
-
-/* Animation Trăng "thở" (Phát sáng nhịp nhàng) */
-@keyframes moonPulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 35px rgba(186, 230, 253, 0.4)) drop-shadow(0 0 70px rgba(56, 189, 248, 0.2));
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 50px rgba(186, 230, 253, 0.65)) drop-shadow(0 0 100px rgba(56, 189, 248, 0.35));
-    transform: translateY(-8px) scale(1.02);
-  }
-}
-
-/* Animation Mây trôi ngang qua Mặt Trăng */
-@keyframes cloudDrift {
-  0% { transform: translateX(-10%); }
-  50% { transform: translateX(10%); }
-  100% { transform: translateX(-10%); }
-}
-
-.animate-moon-pulse {
-  animation: moonPulse 8s ease-in-out infinite;
-}
-
-.animate-cloud-drift {
-  animation: cloudDrift 20s ease-in-out infinite;
-}
-
-/* Animation Trăng "thở" (Phát sáng nhịp nhàng) */
-@keyframes moonPulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 35px rgba(186, 230, 253, 0.4)) drop-shadow(0 0 70px rgba(56, 189, 248, 0.2));
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 50px rgba(186, 230, 253, 0.65)) drop-shadow(0 0 100px rgba(56, 189, 248, 0.35));
-    transform: translateY(-8px) scale(1.02);
-  }
 }

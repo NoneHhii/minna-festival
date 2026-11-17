@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Gift } from 'lucide-react';
 import { artists, type Artist } from '../data/artists';
 import { ImageModal } from './ImageModal';
 import { BoothMap } from './BoothMap';
@@ -15,14 +16,13 @@ export const ArtistSection: React.FC = () => {
         setFocusedArtistId(id);
         const element = artistRefs.current[id];
         if (element) {
-            // Calculate an offset so it doesn't stick directly to the top of the viewport
             const y = element.getBoundingClientRect().top + window.scrollY - 100;
             window.scrollTo({ top: y, behavior: 'smooth' });
         }
     };
 
     return (
-        <section className="bg-[#12131a] py-20 px-4" id="art">
+        <section className="bg-transparent py-20 px-4 relative z-10" id="art">
             <div className="max-w-7xl mx-auto">
                 <motion.div
                     className="text-center mb-16"
@@ -30,11 +30,11 @@ export const ArtistSection: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    <h2 className="p-3 text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">
-                        Gian hàng
+                    <h2 className="p-3 text-4xl md:text-5xl font-black bg-gradient-to-r from-amber-200 via-rose-300 to-emerald-300 bg-clip-text text-transparent mb-4 flex items-center justify-center gap-3">
+                        <span>🎄 Khu Vực Gian Hàng 🎁</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-8">
-                        Khám phá sơ đồ gian hàng và các tác phẩm fanart, merchandise độc đáo nhất.
+                    <p className="text-slate-300 max-w-2xl mx-auto text-lg mb-8">
+                        Khám phá sơ đồ gian hàng Giáng Sinh và các tác phẩm fanart, merchandise độc đáo nhất.
                     </p>
                 </motion.div>
 
@@ -61,16 +61,16 @@ export const ArtistSection: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className={`bg-[#1a1b23] rounded-2xl p-6 border transition-all duration-300 group cursor-pointer flex flex-col items-center text-center shadow-lg ${
+                            className={`bg-[#0b181d]/85 backdrop-blur-md rounded-2xl p-6 border transition-all duration-300 group cursor-pointer flex flex-col items-center text-center shadow-lg ${
                                 focusedArtistId === artist.id 
-                                    ? 'border-blue-400 shadow-blue-500/30 scale-[1.02]' 
-                                    : 'border-white/5 hover:border-blue-500/50 hover:shadow-blue-500/20'
+                                    ? 'border-amber-400 shadow-amber-500/25 scale-[1.02]' 
+                                    : 'border-amber-200/15 hover:border-amber-400/50 hover:shadow-red-500/20'
                             }`}
                             onClick={() => setSelectedArtist(artist)}
                             onMouseEnter={() => setFocusedArtistId(artist.id)}
                             onMouseLeave={() => setFocusedArtistId(null)}
                         >
-                            <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-[#242632] group-hover:border-blue-500 transition-colors duration-300">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-[#152830] group-hover:border-amber-400 transition-colors duration-300">
                                 <img
                                     src={artist.avatar}
                                     alt={artist.name}
@@ -78,18 +78,19 @@ export const ArtistSection: React.FC = () => {
                                 />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
                                 {artist.name}
                             </h3>
-                            <p className="text-blue-400 font-medium mb-4 text-sm uppercase tracking-wider">
+                            <p className="text-emerald-300 font-medium mb-4 text-sm uppercase tracking-wider">
                                 {artist.specialty}
                             </p>
-                            <p className="text-gray-400 text-sm line-clamp-3 mb-6">
+                            <p className="text-slate-400 text-sm line-clamp-3 mb-6">
                                 {artist.description}
                             </p>
 
-                            <button className="mt-auto px-6 py-2 bg-white/5 group-hover:bg-blue-600 text-white rounded-full text-sm font-medium transition-colors duration-300 w-full">
-                                Xem tác phẩm
+                            <button className="mt-auto px-6 py-2.5 bg-white/5 group-hover:bg-gradient-to-r group-hover:from-red-600 group-hover:to-amber-500 text-white rounded-full text-sm font-semibold transition-all duration-300 w-full flex items-center justify-center gap-2 border border-white/10 group-hover:border-amber-200/30">
+                                <Gift className="w-4 h-4" />
+                                <span>Xem tác phẩm</span>
                             </button>
                         </motion.div>
                     ))}

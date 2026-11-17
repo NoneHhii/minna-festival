@@ -5,11 +5,11 @@ export interface Message {
 }
 
 export const messages: Message[] = [
-    { text: "🎉 Welcome to Minna Festival!", duration: 4000 },
-    { text: "✨ Đăng ký Cosplay ngay nhé!", duration: 3500 },
-    { text: "📸 Chụp ảnh check-in cùng PAMA!", duration: 4000 },
-    { text: "🎭 Tìm partner cosplay tại đây!", duration: 3500 },
-    { text: "🏆 Tham gia Shining Stage!", duration: 4000 },
+    { text: "🎄 Merry Christmas tại Minna Festival!", duration: 4000 },
+    { text: "❄️ Đăng ký Cosplay mùa Giáng Sinh ngay nhé!", duration: 3500 },
+    { text: "🎁 Chụp ảnh check-in lung linh cùng PAMA!", duration: 4000 },
+    { text: "🎅 Đón quà Noel & tìm partner cosplay tại đây!", duration: 3500 },
+    { text: "🌟 Tham gia Shining Stage đêm Giáng Sinh!", duration: 4000 },
 ];
 
 export interface ChibiPosition {
@@ -18,10 +18,10 @@ export interface ChibiPosition {
 }
 
 export const mascotPositions: ChibiPosition[] = [
-    { x: 10, y: 20 },
-    { x: 85, y: 15 },
+    { x: 10, y: 24 },
+    { x: 85, y: 22 },
     { x: 90, y: 70 },
     { x: 15, y: 75 },
-    { x: 50, y: 90 },
-    { x: 30, y: 40 },
+    { x: 50, y: 88 },
+    { x: 28, y: 45 },
 ];

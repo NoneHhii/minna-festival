@@ -7,7 +7,7 @@ export const PhotographerSection: React.FC = () => {
     const [selectedPhotographer, setSelectedPhotographer] = useState<Photographer | null>(null);
 
     return (
-        <section className="bg-[#12131a] py-20 px-4" id="pt">
+        <section className="bg-transparent py-10 px-4 relative z-10 w-full" id="pt">
             <div className="max-w-7xl mx-auto">
                 <motion.div
                     className="text-center mb-16"
@@ -15,11 +15,11 @@ export const PhotographerSection: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    <h2 className="p-3 text-4xl md:text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">
-                        Photographer
+                    <h2 className="p-3 text-4xl md:text-5xl font-black bg-gradient-to-r from-amber-200 via-rose-300 to-emerald-300 bg-clip-text text-transparent mb-4">
+                        🎄 Photographer ❄️
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        Gặp gỡ những nhiếp ảnh gia tài năng sẽ lưu giữ những khoảnh khắc tuyệt vời nhất của bạn.
+                    <p className="text-slate-300 max-w-2xl mx-auto text-lg">
+                        Gặp gỡ những nhiếp ảnh gia tài năng sẽ lưu giữ những khoảnh khắc Giáng Sinh tuyệt vời nhất của bạn.
                     </p>
                 </motion.div>
 
@@ -31,10 +31,10 @@ export const PhotographerSection: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="bg-[#1a1b23] rounded-2xl p-6 border border-white/5 hover:border-blue-500/50 transition-all duration-300 group cursor-pointer flex flex-col items-center text-center shadow-lg hover:shadow-blue-500/20 relative"
+                            className="bg-[#0b181d]/85 backdrop-blur-md rounded-2xl p-6 border border-amber-200/15 hover:border-amber-400/50 transition-all duration-300 group cursor-pointer flex flex-col items-center text-center shadow-lg hover:shadow-red-500/20 relative"
                             onClick={() => setSelectedPhotographer(pt)}
                         >
-                            <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-[#242632] group-hover:border-blue-500 transition-colors duration-300">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-[#152830] group-hover:border-amber-400 transition-colors duration-300">
                                 <img
                                     src={pt.avatar}
                                     alt={pt.name}
@@ -42,18 +42,18 @@ export const PhotographerSection: React.FC = () => {
                                 />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
                                 {pt.name}
                             </h3>
-                            <p className="text-blue-400 font-medium text-sm uppercase tracking-wider">
+                            <p className="text-emerald-300 font-medium text-sm uppercase tracking-wider">
                                 {pt.specialty}
                             </p>
                             <div className="mt-auto mb-4">
-                                <p className="text-gray-400 text-sm">
+                                <p className="text-amber-200/80 text-sm font-medium">
                                     Giá: {pt.cost}
                                 </p>
                             </div>
-                            <p className="text-gray-400 text-sm line-clamp-3 mb-6">
+                            <p className="text-slate-400 text-sm line-clamp-3 mb-6">
                                 {pt.description}
                             </p>
 
@@ -64,7 +64,7 @@ export const PhotographerSection: React.FC = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white transition-all duration-300 text-sm font-semibold"
+                                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-red-600/20 text-amber-200 border border-amber-400/30 hover:bg-gradient-to-r hover:from-red-600 hover:to-amber-500 hover:text-white transition-all duration-300 text-sm font-semibold"
                                 >
                                     <svg 
                                         className="w-4 h-4 fill-current" 

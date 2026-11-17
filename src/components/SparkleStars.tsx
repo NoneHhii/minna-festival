@@ -1,71 +1,157 @@
 import React, { useMemo } from 'react';
-import { Star, Sparkles } from 'lucide-react';
+import { Snowflake } from 'lucide-react';
 
-interface StarParticle {
+interface FrostFlake {
     id: number;
-    top: number; // vị trí % theo chiều dọc trang
-    left: number; // vị trí % theo chiều ngang trang
-    size: number; // kích thước w/h
-    delay: number; // độ trễ animation (giúp các sao nhấp nháy lệch nhịp tự nhiên)
-    duration: number; // thời gian nhấp nháy
-    type: 'star' | 'sparkle';
+    top: number;
+    left: number;
+    size: number;
+    delay: number;
+    duration: number;
+    color: string;
+}
+
+interface FallingFlake {
+    id: number;
+    left: number;
+    size: number;
+    delay: number;
+    duration: number;
+    sway: number;
+    opacity: number;
+    isDot: boolean;
     color: string;
 }
 
 interface SparkleStarsProps {
-    count?: number; // Cho phép truyền số lượng sao mong muốn
+    count?: number;
 }
 
-export const SparkleStars: React.FC<SparkleStarsProps> = ({count = 260}) => {
-    // Tạo ngẫu nhiên 30 ngôi sao trải dài từ top 0% đến 95% trang web
-    const stars = useMemo<StarParticle[]>(() => {
+// Hàm sinh số giả ngẫu nhiên thuần khiết (pure deterministic PRNG)
+const seededRandom = (seed: number): number => {
+    const x = Math.sin(seed * 9999.91) * 10000;
+    return x - Math.floor(x);
+};
+
+export const SparkleStars: React.FC<SparkleStarsProps> = ({ count = 110 }) => {
+    // 1. Các bông tuyết băng giá lấp lánh rải đều khắp chiều dài trang
+    const frostFlakes = useMemo<FrostFlake[]>(() => {
         const colors = [
-            'text-cyan-200',
-            'text-amber-200',
-            'text-sky-300',
-            'text-indigo-200',
-            'text-[#e2e8f0]',
+            'text-white',
+            'text-sky-100',
+            'text-amber-100',
+            'text-emerald-100',
+            'text-rose-100',
         ];
 
-        const glowEffects = [
-            'drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]',
-            'drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]',
-            'drop-shadow-[0_0_6px_rgba(255,255,255,0.7)]',
-        ];
+        const actualCount = Math.min(count, 120);
 
-        return Array.from({ length: count }).map((_, i) => ({
-            id: i,
-            // Rải đều theo từng nấc % từ top 1% đến 98%
-            top: Number((Math.random() * 97 + 1).toFixed(2)),
-            left: Number((Math.random() * 94 + 3).toFixed(2)),
-            size: Math.floor(Math.random() * 10) + 8, // Size vừa vặn từ 8px đến 18px để không bị rối mắt
-            delay: Number((Math.random() * 4).toFixed(1)), // Trễ ngắn hơn (0s -> 4s) để sao lên nhanh hơn
-            duration: Number((Math.random() * 2.5 + 1.5).toFixed(1)), // Nhấp nháy nhanh nhịp nhàng (1.5s -> 4s)
-            type: Math.random() > 0.35 ? 'star' : 'sparkle',
-            color: colors[Math.floor(Math.random() * colors.length)],
-            glow: glowEffects[Math.floor(Math.random() * glowEffects.length)]
-        }));
+        return Array.from({ length: actualCount }).map((_, i) => {
+            const r1 = seededRandom(i * 7 + 1);
+            const r2 = seededRandom(i * 7 + 2);
+            const r3 = seededRandom(i * 7 + 3);
+            const r4 = seededRandom(i * 7 + 4);
+            const r5 = seededRandom(i * 7 + 5);
+            const r6 = seededRandom(i * 7 + 6);
+
+            return {
+                id: i,
+                top: Number((r1 * 97 + 1).toFixed(2)),
+                left: Number((r2 * 94 + 3).toFixed(2)),
+                size: Math.floor(r3 * 11) + 9, // 9px -> 19px
+                delay: Number((r4 * 5).toFixed(1)),
+                duration: Number((r5 * 3 + 2.5).toFixed(1)),
+                color: colors[Math.floor(r6 * colors.length)],
+            };
+        });
+    }, [count]);
+
+    // 2. Màn mưa tuyết rơi nhẹ nhàng liên tục trên toàn khung nhìn (viewport)
+    const fallingFlakes = useMemo<FallingFlake[]>(() => {
+        const colors = ['text-white', 'text-sky-100', 'text-amber-50'];
+
+        return Array.from({ length: 42 }).map((_, i) => {
+            const s1 = seededRandom(i * 11 + 101);
+            const s2 = seededRandom(i * 11 + 102);
+            const s3 = seededRandom(i * 11 + 103);
+            const s4 = seededRandom(i * 11 + 104);
+            const s5 = seededRandom(i * 11 + 105);
+            const s6 = seededRandom(i * 11 + 106);
+            const s7 = seededRandom(i * 11 + 107);
+            const s8 = seededRandom(i * 11 + 108);
+
+            const duration = Number((s1 * 10 + 10).toFixed(1)); // 10s -> 20s
+            return {
+                id: i,
+                left: Number((s2 * 98 + 1).toFixed(2)),
+                size: Math.floor(s3 * 13) + 10, // 10px -> 22px
+                // Delay âm để ngay khi mở trang tuyết đã phủ đều giữa không trung
+                delay: -Number((s4 * duration).toFixed(1)),
+                duration,
+                sway: Math.floor(s5 * 70) - 35, // -35px -> +35px
+                opacity: Number((s6 * 0.5 + 0.3).toFixed(2)),
+                isDot: s7 > 0.68,
+                color: colors[Math.floor(s8 * colors.length)],
+            };
+        });
     }, []);
 
     return (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
-            {stars.map((star) => {
-                const IconComponent = star.type === 'star' ? Star : Sparkles;
-                return (
-                    <IconComponent
-                        key={star.id}
-                        className={`absolute ${star.color} opacity-0 animate-sparkle`}
+        <>
+            {/* Lớp tuyết rơi liên tục theo khung hình */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden z-20">
+                {fallingFlakes.map((flake) =>
+                    flake.isDot ? (
+                        <span
+                            key={`fall-dot-${flake.id}`}
+                            className="absolute top-0 rounded-full bg-white blur-[0.8px] animate-snowfall"
+                            style={{
+                                left: `${flake.left}%`,
+                                width: `${Math.max(4, Math.round(flake.size * 0.35))}px`,
+                                height: `${Math.max(4, Math.round(flake.size * 0.35))}px`,
+                                animationDelay: `${flake.delay}s`,
+                                animationDuration: `${flake.duration}s`,
+                                ['--sway' as string]: `${flake.sway}px`,
+                                ['--flake-opacity' as string]: flake.opacity,
+                            }}
+                        />
+                    ) : (
+                        <Snowflake
+                            key={`fall-icon-${flake.id}`}
+                            strokeWidth={1.6}
+                            className={`absolute top-0 ${flake.color} drop-shadow-[0_0_6px_rgba(255,255,255,0.65)] animate-snowfall`}
+                            style={{
+                                left: `${flake.left}%`,
+                                width: `${flake.size}px`,
+                                height: `${flake.size}px`,
+                                animationDelay: `${flake.delay}s`,
+                                animationDuration: `${flake.duration}s`,
+                                ['--sway' as string]: `${flake.sway}px`,
+                                ['--flake-opacity' as string]: flake.opacity,
+                            }}
+                        />
+                    )
+                )}
+            </div>
+
+            {/* Lớp bông tuyết băng giá lấp lánh dọc theo trang */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
+                {frostFlakes.map((flake) => (
+                    <Snowflake
+                        key={`frost-${flake.id}`}
+                        strokeWidth={1.5}
+                        className={`absolute ${flake.color} opacity-0 animate-sparkle`}
                         style={{
-                            top: `${star.top}%`,
-                            left: `${star.left}%`,
-                            width: `${star.size}px`,
-                            height: `${star.size}px`,
-                            animationDelay: `${star.delay}s`,
-                            animationDuration: `${star.duration}s`,
+                            top: `${flake.top}%`,
+                            left: `${flake.left}%`,
+                            width: `${flake.size}px`,
+                            height: `${flake.size}px`,
+                            animationDelay: `${flake.delay}s`,
+                            animationDuration: `${flake.duration}s`,
                         }}
                     />
-                );
-            })}
-        </div>
+                ))}
+            </div>
+        </>
     );
 };
